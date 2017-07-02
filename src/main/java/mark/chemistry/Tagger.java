@@ -10,7 +10,6 @@
 package mark.chemistry;
 
 import java.io.BufferedReader;
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,7 +22,6 @@ import gate.Factory;
 import gate.FeatureMap;
 import gate.Gate;
 import gate.LanguageAnalyser;
-import gate.ProcessingResource;
 import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
@@ -39,9 +37,7 @@ import gate.util.InvalidOffsetException;
  * A tagger for chemical elements and compounds.
  */
 @CreoleResource(name="Chemistry Tagger", comment="A tagger for chemical names.", helpURL="http://gate.ac.uk/userguide/sec:parsers:chemistrytagger", icon="chemistry")
-public class Tagger extends AbstractLanguageAnalyser implements
-                                                    ProcessingResource,
-                                                    Serializable {
+public class Tagger extends AbstractLanguageAnalyser {
 
   private static final long serialVersionUID = -2754855608422187746L;
 
@@ -153,6 +149,11 @@ public class Tagger extends AbstractLanguageAnalyser implements
       throw new ResourceInstantiationException(
               "Transducer grammar URL must be specified");
     }
+	if (elementMapURL == null) {
+      throw new ResourceInstantiationException(
+    		  "Element Mapping file URL must be specified");
+    }
+    
     elementSymbol = new ArrayList<String>();
     elementName = new ArrayList<String>();
     try (BufferedReader in = new BomStrippingInputStreamReader(
@@ -254,7 +255,7 @@ public class Tagger extends AbstractLanguageAnalyser implements
       params.put("majorType", "chemTaggerSymbols");
       temp = docAS.get("Lookup", params);
       if(temp != null) docAS.removeAll(temp);
-      if(removeElements.booleanValue()) {
+      if(removeElements) {
         params = Factory.newFeatureMap();
         AnnotationSet compounds = docAS.get("ChemicalCompound", params);
         if(compounds != null) {
