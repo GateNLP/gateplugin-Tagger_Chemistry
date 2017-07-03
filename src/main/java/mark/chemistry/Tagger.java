@@ -10,6 +10,7 @@
 package mark.chemistry;
 
 import java.io.BufferedReader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
 import gate.creole.ResourceInstantiationException;
+import gate.creole.ResourceReference;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
@@ -54,14 +56,23 @@ public class Tagger extends AbstractLanguageAnalyser {
    * The URL of the gazetteer lists definition for spotting elements as
    * part of compounds.
    */
-  private URL compoundListsURL;
+  private ResourceReference compoundListsURL;
 
   @CreoleParameter(comment="The gazetteer lists definition for spotting element symbols as part of compounds", defaultValue="resources/compound.def")
-  public void setCompoundListsURL(URL newValue) {
+  public void setCompoundListsURL(ResourceReference newValue) {
     compoundListsURL = newValue;
   }
+  
+  @Deprecated
+  public void setCompoundListsURL(URL newValue) {
+    try {
+      this.setCompoundListsURL(new ResourceReference(newValue));
+    } catch (URISyntaxException e) {
+      throw new RuntimeException("Error converting URL to ResourceReference", e);
+    }
+  }
 
-  public URL getCompoundListsURL() {
+  public ResourceReference getCompoundListsURL() {
     return compoundListsURL;
   }
 
@@ -80,28 +91,46 @@ public class Tagger extends AbstractLanguageAnalyser {
    * The URL of the gazetteer lists definition for spotting elements on
    * their own.
    */
-  private URL elementListsURL;
+  private ResourceReference elementListsURL;
 
   @CreoleParameter(comment="The gazetteer lists definition for spotting element symbols and names alone", defaultValue="resources/element.def")
-  public void setElementListsURL(URL newValue) {
+  public void setElementListsURL(ResourceReference newValue) {
     elementListsURL = newValue;
   }
+  
+  @Deprecated
+  public void setElementListsURL(URL newValue) {
+    try {
+      this.setElementListsURL(new ResourceReference(newValue));
+    } catch (URISyntaxException e) {
+      throw new RuntimeException("Error converting URL to ResourceReference", e);
+    }
+  }
 
-  public URL getElementListsURL() {
+  public ResourceReference getElementListsURL() {
     return elementListsURL;
   }
 
   /**
    * URL of the JAPE grammar.
    */
-  private URL transducerGrammarURL;
+  private ResourceReference transducerGrammarURL;
 
   @CreoleParameter(comment="The JAPE grammar", defaultValue="resources/main.jape")
-  public void setTransducerGrammarURL(URL newValue) {
+  public void setTransducerGrammarURL(ResourceReference newValue) {
     transducerGrammarURL = newValue;
   }
+  
+  @Deprecated
+  public void setTransducerGrammarURL(URL newValue) {
+    try {
+      this.setTransducerGrammarURL(new ResourceReference(newValue));
+    } catch (URISyntaxException e) {
+      throw new RuntimeException("Error converting URL to ResourceReference", e);
+    }
+  }
 
-  public URL getTransducerGrammarURL() {
+  public ResourceReference getTransducerGrammarURL() {
     return transducerGrammarURL;
   }
 
@@ -117,14 +146,23 @@ public class Tagger extends AbstractLanguageAnalyser {
     return removeElements;
   }
 
-  private URL elementMapURL;
+  private ResourceReference elementMapURL;
 
   @CreoleParameter(comment="File which contains the mapping between element symbols and names",defaultValue="resources/element_map.txt")
-  public void setElementMapURL(URL newValue) {
+  public void setElementMapURL(ResourceReference newValue) {
     elementMapURL = newValue;
   }
+  
+  @Deprecated
+  public void setElementMapURL(URL newValue) {
+    try {
+      this.setElementMapURL(new ResourceReference(newValue));
+    } catch (URISyntaxException e) {
+      throw new RuntimeException("Error converting URL to ResourceReference", e);
+    }
+  }
 
-  public URL getElementMapURL() {
+  public ResourceReference getElementMapURL() {
     return elementMapURL;
   }
 
