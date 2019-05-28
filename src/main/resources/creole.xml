@@ -1,4 +1,4 @@
 <!-- creole.xml for Chemistry Tagger -->
 <CREOLE-DIRECTORY>
-	<REQUIRES GROUP="uk.ac.gate.plugins" ARTIFACT="annie" VERSION="8.5-SNAPSHOT"/>
+	<REQUIRES GROUP="uk.ac.gate.plugins" ARTIFACT="annie" VERSION="8.6"/>
 </CREOLE-DIRECTORY>
